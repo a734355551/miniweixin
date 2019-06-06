@@ -32,126 +32,10 @@ Page({
 
   },
 
-  onLoad: function (params) {
-    var me = this;
-
-    // var user = app.userInfo;
-    // fixme 修改原有的全局对象为本地缓存
-    var user = app.getGlobalUserInfo();
-    var userId = user.id;
-
-    var publisherId = params.publisherId;
-    if (publisherId != null && publisherId != '' && publisherId != undefined) {
-      userId = publisherId;
-      me.setData({
-        isMe: false,
-        publisherId: publisherId,
-        serverUrl: app.serverUrl
-      })
-    }
-    me.setData({
-      userId: userId
-    })
-
-
-    wx.showLoading({
-      title: '请等待...',
-    });
-    var serverUrl = app.serverUrl;
-    // 调用后端
-    wx.request({
-      url: serverUrl + '/user/query?userId=' + userId + "&fanId=" + user.id,
-      method: "POST",
-      header: {
-        'content-type': 'application/json', // 默认值
-        'headerUserId': user.id,
-        'headerUserToken': user.userToken
-      },
-      success: function (res) {
-        console.log(res.data);
-        wx.hideLoading();
-        if (res.data.status == 200) {
-          var userInfo = res.data.data;
-          var faceUrl = "../resource/images/noneface.png";
-          if (userInfo.faceImage != null && userInfo.faceImage != '' && userInfo.faceImage != undefined) {
-            faceUrl = serverUrl + userInfo.faceImage;
-          }
-
-
-          me.setData({
-            faceUrl: faceUrl,
-            fansCounts: userInfo.fansCounts,
-            followCounts: userInfo.followCounts,
-            receiveLikeCounts: userInfo.receiveLikeCounts,
-            nickname: userInfo.nickname,
-            isFollow: userInfo.follow
-          });
-        } else if (res.data.status == 502) {
-          wx.showToast({
-            title: res.data.msg,
-            duration: 3000,
-            icon: "none",
-            success: function () {
-              wx.redirectTo({
-                url: '../userLogin/login',
-              })
-            }
-          })
-        }
-      }
-    })
-
-    me.getMyVideoList(1);
-  },
-
-  followMe: function (e) {
-    var me = this;
-
-    var user = app.getGlobalUserInfo();
-    var userId = user.id;
-    var publisherId = me.data.publisherId;
-
-    var followType = e.currentTarget.dataset.followtype;
-
-    // 1：关注 0：取消关注
-    var url = '';
-    if (followType == '1') {
-      url = '/user/beyourfans?userId=' + publisherId + '&fanId=' + userId;
-    } else {
-      url = '/user/dontbeyourfans?userId=' + publisherId + '&fanId=' + userId;
-    }
-
-    wx.showLoading();
-    wx.request({
-      url: app.serverUrl + url,
-      method: 'POST',
-      header: {
-        'content-type': 'application/json', // 默认值
-        'headerUserId': user.id,
-        'headerUserToken': user.userToken
-      },
-      success: function () {
-        wx.hideLoading();
-        if (followType == '1') {
-          me.setData({
-            isFollow: true,
-            fansCounts: ++me.data.fansCounts
-          })
-        } else {
-          me.setData({
-            isFollow: false,
-            fansCounts: --me.data.fansCounts
-          })
-        }
-      }
-    })
-  },
-
-
 
   logout: function () {
-    // var user = app.userInfo;
-    var user = app.getGlobalUserInfo();
+    var user = app.userInfo;
+    //var user = app.getGlobalUserInfo();
 
     var serverUrl = app.serverUrl;
     wx.showLoading({
@@ -174,9 +58,10 @@ Page({
             icon: 'success',
             duration: 2000
           });
-          // app.userInfo = null;
+          //注销后 清空本地的session
+          app.userInfo = null;
           // 注销以后，清空缓存
-          wx.removeStorageSync("userInfo")
+          //wx.removeStorageSync("userInfo")
           // 页面跳转
           wx.redirectTo({
             url: '../userLogin/login',
@@ -185,26 +70,26 @@ Page({
       }
     })
   },
-
+//上传头像
   changeFace: function () {
     var me = this;
     wx.chooseImage({
       count: 1,
-      sizeType: ['compressed'],
+      sizeType: ['compressed'], //压缩的图
       sourceType: ['album'],
       success: function (res) {
         var tempFilePaths = res.tempFilePaths;
         console.log(tempFilePaths);
-
         wx.showLoading({
           title: '上传中...',
         })
         var serverUrl = app.serverUrl;
         // fixme 修改原有的全局对象为本地缓存
-        var userInfo = app.getGlobalUserInfo();
-
+        //var userInfo = app.getGlobalUserInfo();
+        var userInfo = app.userInfo;
+        console.log(userInfo);
         wx.uploadFile({
-          url: serverUrl + '/user/uploadFace?userId=' + userInfo.id,  //app.userInfo.id,
+          url: serverUrl + '/user/uploadFace?userId=' + userInfo.id,        //app.userInfo.id,
           filePath: tempFilePaths[0],
           name: 'file',
           header: {
@@ -213,6 +98,7 @@ Page({
             'headerUserToken': userInfo.userToken
           },
           success: function (res) {
+            //当success返回是字符串 需要转成json  格式化
             var data = JSON.parse(res.data);
             console.log(data);
             wx.hideLoading();
@@ -230,6 +116,7 @@ Page({
             } else if (data.status == 500) {
               wx.showToast({
                 title: data.msg
+
               });
             } else if (res.data.status == 502) {
               wx.showToast({

@@ -59,6 +59,12 @@ Page({
             });
             //全局对象
             app.userInfo = res.data.data;
+            // 页面跳转
+            wx.navigateTo({
+              url: '../mine/mine',
+            })
+
+
             // fixme 修改原有的全局对象为本地缓存
             //app.setGlobalUserInfo(res.data.data);
             // 页面跳转
