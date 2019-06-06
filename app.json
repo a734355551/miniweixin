@@ -1,0 +1,15 @@
+{
+  "pages":[
+    "pages/userRegist/regist",
+    "pages/index/index",
+    "pages/userLogin/login"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "一根黄瓜藤",
+    "navigationBarTextStyle":"black"
+  },
+  "debug": true
+}
+ 
