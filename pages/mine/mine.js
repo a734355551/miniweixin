@@ -31,7 +31,42 @@ Page({
     myFollowFalg: true
 
   },
-
+  onLoad:function(){
+    var me = this;
+    var serverUrl = app.serverUrl;
+    var user = app.userInfo;
+    //添加等待 转圈
+    wx.showLoading({
+      title: '请等待...',
+    });
+    wx.request({
+      url: serverUrl + '/user/query?userId='+user.id,
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data);
+        //去掉等待
+        wx.hideLoading();
+        if (res.data.status == 200) {
+          var userInfo = res.data.data;
+          //用户头像设置  先给个默认值
+          var faceUrl = "../ resource / images / noneface.png";
+          if (userInfo.faceImage != null && userInfo.faceImage != "" && userInfo.faceImage!= undefined){
+            faceUrl = serverUrl + userInfo.faceImage;
+          }
+          me.setData({
+              faceUrl:faceUrl,
+            fansCounts: userInfo.fansCounts,
+            followCounts: userInfo.followCounts,
+            receiveLikeCounts: userInfo.receiveLikeCounts,
+            nickname: userInfo.nickname
+          });
+        }
+      }
+    })
+  },
 
   logout: function () {
     var user = app.userInfo;
