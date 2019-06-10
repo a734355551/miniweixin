@@ -2,6 +2,8 @@ const app = getApp()
 
 Page({
     data: {
+      bgmList:[],
+      serverUrl:"",
         poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
         name: '此时此刻',
         author: '许巍',
@@ -9,6 +11,31 @@ Page({
     },
 
     onLoad: function () {
+      var me = this;
+      var serverUrl = app.serverUrl;
+      //添加等待 转圈
+      wx.showLoading({
+        title: '请等待...',
+      });
+      wx.request({
+        url: serverUrl + '/bgm/list?',
+        method: "POST",
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          console.log(res.data);
+          //去掉等待
+          wx.hideLoading();
+          if (res.data.status == 200) {
+            var bgmList = res.data.data;
+            me.setData({
+              bgmList:bgmList,
+              serverUrl: serverUrl
+            })
+          }
+        }
+      })
     }
 })
 

@@ -3,26 +3,12 @@
 
 
 <radio-group name ="bgmId">
-<view class='container'> 
-    <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio"  
-  controls loop></audio>
-   <radio style='margin-top:20px' value=''></radio>
-</view>
-  <view class='container'> 
-    <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio"  
-  controls loop></audio>
-   <radio style='margin-top:20px' value=''></radio>
-</view>
-<view class='container'> 
-    <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio"  
-  controls loop></audio>
-   <radio style='margin-top:20px' value=''></radio>
-</view>
-<view class='container'> 
-    <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio"  
-  controls loop></audio>
-   <radio style='margin-top:20px' value=''></radio>
-</view>
+<block wx:for ="{{bgmList}}">
+    <view class='container'> 
+        <audio name="{{item.name}}" author="{{item.author}}" src="{{serverUrl}}{{item.path}}" id="myAudio" style='width:300px' controls loop></audio>
+      <radio style='margin-top:20px' value='{{item.id}}'></radio>
+    </view>
+</block>
 </radio-group>
 
         <view class="inputView">
