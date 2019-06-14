@@ -1,11 +1,11 @@
 {
   "pages":[
-    
+    "pages/index/index",
     "pages/userLogin/login",
     "pages/chooseBgm/chooseBgm",
     "pages/mine/mine",
-    "pages/userRegist/regist",
-    "pages/index/index"
+    "pages/userRegist/regist"
+    
   ],
   "window":{
     "backgroundTextStyle":"light",
