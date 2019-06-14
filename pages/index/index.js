@@ -36,6 +36,10 @@ Page({
        method: "post",
        success: function (res) {
          wx.hideLoading();
+         //去掉下拉刷新得小菊花
+         wx.hideNavigationBarLoading();
+         //停止下拉刷新
+         wx.stopPullDownRefresh();
          console.log(res.data);
          //判断当前页page 是否是第一页 如果是第一页 ，那么设置videoList为空
          if (page == 1) {
@@ -54,6 +58,19 @@ Page({
        }
      })
    },
+  //下拉刷新
+  //对应得json配置种
+  // "enablePullDownRefresh": true,
+  // "backgroundTextStyle": "dark"
+  //配置 把下拉刷新开启
+  //backgroundTextStyle 把下拉刷新样式 配置 dark
+onPullDownRefresh:function(){
+  wx.showNavigationBarLoading();
+  //下拉刷新 每次都找第一页
+  this.getAllVideoList(1);
+},
+
+
   //上拉 刷新 实现分页
   onReachBottom:function(){
     var me = this;
