@@ -1,5 +1,5 @@
 const app = getApp()
-
+//弹幕测试
 Page({
   data: {
     danmuList: [

@@ -1,18 +1,18 @@
 {
-  "pages":[
+  "pages": [
+    "pages/videotest/videotest",
     "pages/index/index",
     "pages/userLogin/login",
     "pages/chooseBgm/chooseBgm",
     "pages/mine/mine",
     "pages/userRegist/regist"
-    
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "一根黄瓜藤",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
-  "debug": true
+  "debug": true,
+  "sitemapLocation": "sitemap.json"
 }
- 
