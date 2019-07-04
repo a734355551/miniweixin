@@ -34,7 +34,9 @@ Page({
   onLoad:function(){
     var me = this;
     var serverUrl = app.serverUrl;
-    var user = app.userInfo;
+    
+    //fix me var user = app.userInfo;
+    var user = app.getGlobalUserInfo();
     //添加等待 转圈
     wx.showLoading({
       title: '请等待...',
@@ -69,9 +71,10 @@ Page({
   },
 
   logout: function () {
-    var user = app.userInfo;
+    //var user = app.userInfo;
     //var user = app.getGlobalUserInfo();
-
+    //fix me var user = app.userInfo;
+    var user = app.getGlobalUserInfo();
     var serverUrl = app.serverUrl;
     wx.showLoading({
       title: '请等待...',
@@ -94,9 +97,9 @@ Page({
             duration: 2000
           });
           //注销后 清空本地的session
-          app.userInfo = null;
+          //app.userInfo = null;
           // 注销以后，清空缓存
-          //wx.removeStorageSync("userInfo")
+          wx.removeStorageSync("userInfo")
           // 页面跳转
           wx.redirectTo({
             url: '../userLogin/login',
@@ -121,7 +124,9 @@ Page({
         var serverUrl = app.serverUrl;
         // fixme 修改原有的全局对象为本地缓存
         //var userInfo = app.getGlobalUserInfo();
-        var userInfo = app.userInfo;
+    
+        //fix me var user = app.userInfo;
+        var userInfo = app.getGlobalUserInfo();
         console.log(userInfo);
         wx.uploadFile({
           url: serverUrl + '/user/uploadFace?userId=' + userInfo.id,        //app.userInfo.id,

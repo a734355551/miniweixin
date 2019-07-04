@@ -55,13 +55,13 @@ Page({
     wx.showLoading({
       title: '上传中...',
     })
-    console.log("userInfo:::"+app.userInfo.id);
     var serverUrl = app.serverUrl;
-    var userInfo = app.userInfo;
+    //fix me
+    var userInfo = app.getGlobalUserInfo();
     wx.uploadFile({
       url: serverUrl + '/video/upload?',
       formData:{
-        userId:app.userInfo.id,
+        userId:userInfo.id, //fixme app.userInfo.id
         bgmId:bgmId,
         desc: desc,
         videoSeconds: duration,
