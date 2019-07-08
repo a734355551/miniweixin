@@ -1,10 +1,9 @@
-
 function uploadVideo() {
   var me = this;
 
   wx.chooseVideo({
     sourceType: ['album'],
-    success: function (res) {
+    success: function(res) {
       console.log(res);
 
       var duration = res.duration;
@@ -28,12 +27,11 @@ function uploadVideo() {
       } else {
         // 打开选择bgm的页面
         wx.navigateTo({
-          url: '../chooseBgm/chooseBgm?duration=' + duration
-          + "&tmpHeight=" + tmpHeight
-          + "&tmpWidth=" + tmpWidth
-          + "&tmpVideoUrl=" + tmpVideoUrl
-          + "&tmpCoverUrl=" + tmpCoverUrl
-          ,
+          url: '../chooseBgm/chooseBgm?duration=' + duration +
+            "&tmpHeight=" + tmpHeight +
+            "&tmpWidth=" + tmpWidth +
+            "&tmpVideoUrl=" + tmpVideoUrl +
+            "&tmpCoverUrl=" + tmpCoverUrl,
         })
       }
 
@@ -41,7 +39,7 @@ function uploadVideo() {
   })
 
 }
-
+//module.exports 导出方法  通过uploadVideo 就可以使用
 module.exports = {
   uploadVideo: uploadVideo
 }

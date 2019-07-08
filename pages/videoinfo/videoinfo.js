@@ -19,7 +19,7 @@ Page({
 
     placeholder: "说点什么..."
   },
-
+// videoContext 组件 通过videoId 跟一个video组件绑定 通过它可以操作一个video组件
   videoCtx: {},
 
   onLoad: function (params) {    
