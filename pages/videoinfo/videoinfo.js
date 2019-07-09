@@ -1,3 +1,4 @@
+//使用util
 var videoUtil = require('../../utils/videoUtil.js')
 
 const app = getApp()
@@ -119,6 +120,7 @@ Page({
         url: '../userLogin/login?redirectUrl=' + realUrl,
       })
     } else {
+      //一句话将上传视频做完
       videoUtil.uploadVideo();
     }
     

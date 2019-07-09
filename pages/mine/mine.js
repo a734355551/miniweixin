@@ -182,6 +182,8 @@ Page({
 
   uploadVideo: function () {
     // fixme 视频上传复用
+    
+    //单独一行使用util
     // videoUtil.uploadVideo();
     // 以下是原来的代码，不删除，便于参照
     var me = this;

@@ -102,6 +102,7 @@ Page({
     me.getAllVideoList(page, 0);
   },
 
+//showVideoInfo
   showVideoInfo: function(e) {
     var me = this;
     var videoList = me.data.videoList;
